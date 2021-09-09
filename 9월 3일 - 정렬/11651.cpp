@@ -6,8 +6,7 @@ using namespace std;
 bool cmp(pair<int, int> a, pair<int, int> b) {
 	if (a.second != b.second) // y좌표 오름차순
 		return a.second < b.second;
-	if (a.first != b.first) // x좌표 오름차순
-		return a.first < b.first;
+	return a.first < b.first; // x좌표 오름차순
 }
 
 int main() {

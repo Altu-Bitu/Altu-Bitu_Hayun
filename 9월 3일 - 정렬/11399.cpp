@@ -7,9 +7,7 @@ using namespace std;
 int calTime(vector<int> a) {
 	int time = 0;
 	for (int i = 0; i < a.size(); i++) {
-		for (int j = 0; j <= i; j++) {
-			time += a[j];
-		}
+		time += a[i] * (a.size() - i);
 	}
 	return time;
 }
