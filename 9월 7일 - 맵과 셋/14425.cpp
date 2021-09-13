@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 using namespace std;
-
+// Æ²·È½À´Ï´Ù.
 int main() {
 	int n, m;
 	cin >> n >> m;

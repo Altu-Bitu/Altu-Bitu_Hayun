@@ -8,7 +8,6 @@ int wear(map<string, int> clothes) {
 	map<string, int>::iterator it;
 	int count = 1;
 	for (it = clothes.begin(); it != clothes.end(); it++) {
-		// cout << it->first << " : " << it->second << endl;
 		count *= (it->second + 1);
 	}
 	return count - 1;
