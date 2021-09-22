@@ -30,7 +30,7 @@ int main() {
 	
 	int g, l;
 	cin >> g >> l;
-
-	cout << getA(g, l) * g << " " << l / getA(g, l);
+	int a = getA(g, l);
+	cout << a * g << " " << l / a;
 
 }

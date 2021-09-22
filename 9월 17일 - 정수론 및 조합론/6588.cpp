@@ -31,14 +31,14 @@ int main() {
 	while (true) {
 		int n;
 		cin >> n;
-		bool if_wrong = false;
+		bool if_wrong = true;
 
 		if (n == 0)
 			break;
-		for (int i = 3; i < n; i++) {
+		for (int i = 3; i < n; i+=2) {
 			if (prime[i] && prime[n - i]) {
 				cout << n << " = " << i << " + " << n - i <<"\n";
-				if_wrong = true;
+				if_wrong = false;
 				break;
 			}
 		}

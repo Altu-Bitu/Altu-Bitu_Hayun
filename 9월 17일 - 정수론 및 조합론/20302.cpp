@@ -31,26 +31,16 @@ int main() {
 	int n;
 	cin >> n;
 	vector<int> prime = isPrime();
-	map<int, int> m;
+	vector<pair<int, int>> v(SIZE+1);
 
-	char c;
+	char c = '*';
 	int k;
 	bool zero = false;
 	for (int i = 0; i < n; i++) {
-		if (i == 0) {
-			cin >> k;
-			k = abs(k);
-			if (k == 0) {
-				zero = true;
-				break;
-			}
-			while (k > 1) {
-				m[prime[k]]++;
-				k /= prime[k];
-			}
-			continue;
-		}
-		cin >> c >> k;
+		if (i != 0)
+			cin >> c;
+
+		cin >> k;
 		k = abs(k);
 		if (k == 0) {
 			zero = true;
@@ -58,15 +48,15 @@ int main() {
 		}
 		while (k > 1) {
 			if (c == '*')
-				m[prime[k]]++;
+				v[prime[k]].second++;
 			else
-				m[prime[k]]--;
+				v[prime[k]].second--;
 			k /= prime[k];
 		}
 	}
 
 	bool is_mint = true;
-	for (auto iter : m) {
+	for (auto iter : v) {
 		if (iter.second < 0)
 			is_mint = false;
 	}
