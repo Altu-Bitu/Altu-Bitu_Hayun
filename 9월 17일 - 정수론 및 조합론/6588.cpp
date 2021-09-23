@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 // 에라토스테네스의 체 활용
