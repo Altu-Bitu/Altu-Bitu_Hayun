@@ -10,9 +10,9 @@ const int SIZE = 1000000;
 vector<bool> isPrime() {
 	vector<bool> is_prime(SIZE+1, true);
 	is_prime[0] = is_prime[1] = false;
-	for (int i = 2; i <= SIZE; i++) {
+	for (int i = 2; i <= sqrt(SIZE); i++) {
 		if (is_prime[i]) {
-			for (int j = i + i; j <= SIZE; j += i) {
+			for (int j = i * i; j <= SIZE; j += i) {
 				is_prime[j] = false;
 			}
 		}
