@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <map>
 #include <vector>
 using namespace std;
 
@@ -19,23 +20,20 @@ int getScore(vector<int> hw) {
 int main() {
 	int n;
 	cin >> n;
-	vector<string> correct(n);
+	map<string, int> correct;
 	for (int i = 0; i < n; i++) {
 		string temp;
 		cin >> temp;
-		correct[i] = temp;
+		correct[temp] = i;
 	}
 	vector<int> hw(n);
 	for (int i = 0; i < n; i++) {
 		string temp;
 		cin >> temp;
-		for (int j = 0; j < n; j++) {
-			if (temp == correct[j])
-				hw[i] = j;
-		}
+		hw[i] = correct[temp];
 	}
 
 	int score = getScore(hw);
-	cout << score << "/" << n*(n-1)/2;
+	cout << score << "/" << n * (n - 1) / 2;
 	return 0;
 }

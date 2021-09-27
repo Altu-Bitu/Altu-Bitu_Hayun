@@ -5,46 +5,49 @@
 #include <cmath>
 using namespace std;
 
-// 틀렸습니다. (한 3~40퍼까지는 가는데)
-// 어디가 틀린건지 모르겠다. 복잡..
+vector<bool> button(10, true);
+int n;
 
-int getChnl(int n, vector<char> broken) {
-	int min = 100;
+bool check(int a) {
+
+	while (a > 0) {
+		if (button[a % 10] == false)
+			return false;
+		a /= 10;
+	}
+	if (a == 0 && !button[0]) {
+		return false;
+	}
+	return true;
+}
+
+int numLen(int a) {
+	int len = 1;
+	while (a >= 10) {
+		a /= 10;
+		len++;
+	}
+	return len;
+}
+
+int getChnl() {
+	int result = abs(n - 100);
 
 	for (int i = 0; i < 1000000; i++) {
-		bool flag = true;
-		string s = to_string(i);
-		for (int j = 0; j < broken.size(); j++) {
-			if (s.find(broken[j]) != s.npos)
-				flag = false;
-		}
-		if (flag && abs(i - n) < abs(min - n))
-			min = i;
+		if (abs(n - i) + numLen(i) < result && check(i))
+			result = abs(n - i) + numLen(i);
 	}
-	return min;
+	return result;
 }
 
 int main() {
-	int n, m;
-	char k;
+	int m, temp;
 	cin >> n;
 	cin >> m;
-	vector<char> broken;
+	
 	while (m--) {
-		cin >> k;
-		broken.push_back(k);
+		cin >> temp;
+		button[temp] = false;
 	}
-	int channel = getChnl(n, broken);
-	int button = abs(channel - n);
-
-	if (channel == 100)
-		cout << button;
-	else {
-		int cnt = 1;
-		while (channel >= 10) {
-			channel /= 10;
-			cnt++;
-		}
-		cout << cnt + button;
-	}
+	cout << getChnl();
 }

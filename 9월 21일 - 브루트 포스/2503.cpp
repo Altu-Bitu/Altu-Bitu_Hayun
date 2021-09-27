@@ -16,21 +16,21 @@ vector<bool> init() {
 	return total;
 }
 
-int main() {
+int count(int n) {
 	vector<bool> total = init();
-	int n;
-	cin >> n;
 	while (n--) {
-		int k, s, b;
+		int s, b;
+		string k;
 		cin >> k >> s >> b;
-		string temp_k = to_string(k);
 		for (int i = 100; i < 999; i++) {
+			if (!total[i])
+				continue;
 			string temp_i = to_string(i);
 			int temp_s = 0, temp_b = 0;
 			for (int a = 0; a < 3; a++) {
 				for (int b = 0; b < 3; b++) {
-					if (a == b && temp_i[a] == temp_k[b]) temp_s++;
-					if (a != b && temp_i[a] == temp_k[b]) temp_b++;
+					if (a == b && temp_i[a] == k[b]) temp_s++;
+					if (a != b && temp_i[a] == k[b]) temp_b++;
 				}
 			}
 			if (temp_s != s || temp_b != b) total[i] = 0;
@@ -41,7 +41,14 @@ int main() {
 		if (total[i])
 			result++;
 	}
-	cout << result;
+	return result;
+}
+
+int main() {
+	
+	int n;
+	cin >> n;
+	cout << count(n);
 	
 	return 0;
 }
