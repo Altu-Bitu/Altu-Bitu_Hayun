@@ -9,9 +9,8 @@ vector<bool> button(10, true);
 int n;
 
 bool check(int a) {
-
 	while (a > 0) {
-		if (button[a % 10] == false)
+		if (!button[a % 10])
 			return false;
 		a /= 10;
 	}
