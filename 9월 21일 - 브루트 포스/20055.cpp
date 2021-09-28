@@ -11,36 +11,35 @@ vector<info> belt; //컨베이어 벨트 정보 (내구도, 로봇 여부)
 int zero_power; //내구도가 0인 벨트 칸의 개수
 
 int minusPosition(int n, int pos) { // 인덱스 감소
-	if (--pos >= 0)
-		return pos;
-	return n * 2 - 1;
+	if (--pos >= 0)		//pos가 1이상이면
+		return pos;		//--pos 후 리턴
+	return n * 2 - 1;	//pos가 0이면 2n-1 리턴 (인덱스가 0부터 2n-1까지라서)
 }
 
-void second(int n, int start, int end) { //2. 로봇 이동
-	int cur = end;
-	while (cur != start) { //end-1부터 start까지 검사
-		cur = minusPosition(n, cur);
-		int next = (cur + 1) % (n * 2); //다음위치
+void second(int n, int start, int end) {//2. 로봇 이동
+	int cur = end;						//end에 가장 가까운 로봇부터 검사할 것임
+	while (cur != start) {				//end-1부터 start까지 검사, while문 내에서 인덱스 감소하므로 이 라인의 cur는 end부터 start+1까지 (end는 내리는 위치, end+1부터 start-1까지는 로봇이 없다)
+		cur = minusPosition(n, cur);	//인덱스 감소 (end-1부터 start까지)
+		int next = (cur + 1) % (n * 2); //다음위치 (end부터 start+1까지)
 		if (belt[cur].is_on && !belt[next].is_on && belt[next].power) { //현재 위치에 로봇이 있고, 다음 위치에 로봇이 없으며 내구성 1 이상인 경우 -> 로봇 옮김
-			belt[cur].is_on = false;
-			belt[next].power--;
-			if (next != end) //내리는 위치 아닐 경우만
-				belt[next].is_on = true; //로봇 옮기기
-			if (belt[next].power == 0) //옮긴 후 내구성이 0이면
-				zero_power++;
+			belt[cur].is_on = false;	//현재 위치의 로봇을 옮겼으므로 존재하지 않음
+			belt[next].power--;			//다음 위치 내구도를 깎음
+			if (next != end)			//다음 위치가 내리는 위치 아닐 경우만 (다음 위치가 내리는 위치면 어차피 내리기 때문에 로봇을 두지 않음. 회전시 내리는 것은 main에서 처리)
+				belt[next].is_on = true; //다음 위치로 로봇을 옮겼으므로 존재
+			if (belt[next].power == 0)	//옮긴 후 내구성이 0이면
+				zero_power++;			//내구도 0인 벨트 칸 개수 증가
 		}
 	}
 }
 
-void third(int start) { //3. 로봇 올리기
-	if (belt[start].power) { //올리는 위치의 내구도가 0이 아니라면 로봇 올림
-		belt[start].is_on = true;
-		belt[start].power--;
+void third(int start) {				//3. 로봇 올리기
+	if (belt[start].power) {		//올리는 위치의 내구도가 0이 아니라면 로봇 올림
+		belt[start].is_on = true;	//올리는 위치에 로봇 존재
+		belt[start].power--;		//올리면 내구도 감소
 		if (belt[start].power == 0) //올린 후 내구성이 0이면
-			zero_power++;
+			zero_power++;			//내구도 0인 벨트 칸 개수 증가
 	}
 }
-
 
 /*
 [컨베이어 벨트 위의 로봇 문제]
@@ -67,23 +66,23 @@ int main() {
 	cin >> n >> k;
 	belt.assign(n * 2, { 0, false });
 	for (int i = 0; i < n * 2; i++)
-		cin >> belt[i].power;
+		cin >> belt[i].power;		//각 칸의 내구도 정보 받아오기
 
 	//연산
-	int start = 0; //올리는 위치
-	int end = n - 1; //내리는 위치
-	int step = 0; //단계 수
+	int start = 0;		//올리는 위치
+	int end = n - 1;	//내리는 위치
+	int step = 0;		//단계 수
 	while (true) {
-		//1. 올리는 위치, 내리는 위치 인덱스 감소
-		start = minusPosition(n, start);
-		end = minusPosition(n, end);
-		if (belt[end].is_on) //벨트 회전 후, 로봇이 내리는 위치에 있다면 내리기
-			belt[end].is_on = false;
-		second(n, start, end); //2. end-1부터 start까지 검사해서 로봇 이동
-		third(start); //3. start 검사해서 로봇 올리기
-		step++;
-		if (zero_power >= k)
-			break;
+		//1. 벨트 회전 -> 올리는 위치와 내리는 위치 인덱스 값 변화
+		start = minusPosition(n, start);	//올리는 위치 인덱스 값 감소
+		end = minusPosition(n, end);		//내리는 위치 인덱스 값 감소
+		if (belt[end].is_on)				//벨트 회전 후, 로봇이 내리는 위치에 있다면 내리기 (로봇 옮기면서 내리는 것은 second에서 처리함)
+			belt[end].is_on = false;		//내리면 로봇 존재하지 않음
+		second(n, start, end);				//2. end-1부터 start까지 검사해서 로봇 이동
+		third(start);						//3. start 검사해서 로봇 올리기
+		step++;								//1~3까지가 1단계
+		if (zero_power >= k)				//내구도 0인 벨트 칸 개수가 k개 이상이면
+			break;							//종료, 아니라면 1~3 반복
 	}
 	
 	//출력
