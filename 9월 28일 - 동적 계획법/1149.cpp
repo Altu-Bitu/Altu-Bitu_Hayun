@@ -2,25 +2,25 @@
 #include <algorithm>
 using namespace std;
 
-//´ÙÀÌ³»¹Í ÇÁ·Î±×·¡¹Ö È°¿ë
+//ë‹¤ì´ë‚´ë¯¹ í”„ë¡œê·¸ë˜ë° í™œìš©
 
 int minCost(int rgb[][3], int n) {
 	for (int i = 1; i < n; i++) {
-		rgb[i][0] += min(rgb[i - 1][1], rgb[i - 1][2]); //ÇöÀç »¡°­Àº ÀÌÀü ÃÊ·Ï, ÀÌÀü ÆÄ¶û Áß ÃÖ¼Ò°ª°ú ÇÕ»ê
+		rgb[i][0] += min(rgb[i - 1][1], rgb[i - 1][2]); //í˜„ì¬ ë¹¨ê°•ì€ ì´ì „ ì´ˆë¡, ì´ì „ íŒŒë‘ ì¤‘ ìµœì†Œê°’ê³¼ í•©ì‚°
 		rgb[i][1] += min(rgb[i - 1][0], rgb[i - 1][2]); 
 		rgb[i][2] += min(rgb[i - 1][0], rgb[i - 1][1]);
 	}
-	return min(rgb[n - 1][0], min(rgb[n - 1][1], rgb[n - 1][2])); //minÇÔ¼ö´Â ¸Å°³º¯¼ö¸¦ 2°³¸¸ ¹ŞÀ½
+	return min(rgb[n - 1][0], min(rgb[n - 1][1], rgb[n - 1][2])); //miní•¨ìˆ˜ëŠ” ë§¤ê°œë³€ìˆ˜ë¥¼ 2ê°œë§Œ ë°›ìŒ
 }
 
 int main() {
 	int n;
-	//ÀÔ·Â
+	//ì…ë ¥
 	cin >> n;
 	int rgb[1000][3];
 	for (int i = 0; i < n; i++) {
 		cin >> rgb[i][0] >> rgb[i][1] >> rgb[i][2];
 	}
-	//¿¬»ê
+	//ì—°ì‚°
 	cout << minCost(rgb, n);
 }
