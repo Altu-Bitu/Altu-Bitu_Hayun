@@ -1,48 +1,39 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 
 //구현, 자료 구조, 시뮬레이션, 덱 활용
 //푸는데 시간이 너무 오래 걸린다
 
-void halligalli(deque<int> &do_deque, deque<int> &su_deque, int m) {
+void ring(int win, vector<deque<int>> &deques, vector<deque<int>> &grounds) {	  //이기는 사람의 덱에 그라운드 카드 합치는 함수
+	while (!grounds[(win + 1) % 2].empty()) {	//상대의 그라운드 카드 합치기
+		deques[win].push_back(grounds[(win + 1) % 2].back());
+		grounds[(win + 1) % 2].pop_back();
+	}
+	while (!grounds[win].empty()) {	//자신의 그라운드 카드 합치기
+		deques[win].push_back(grounds[win].back());
+		grounds[win].pop_back();
+	}
+}
+
+void halligalli(vector<deque<int>> &deques, int m) {
 	int rounds = 1;
-	deque<int> do_ground, su_ground;
+	vector<deque<int>> grounds(2);
 	while (rounds <= m) {	//m번 진행 후 종료
 		//2 도도를 시작으로 차례대로 그라운드에 자신이 가진 덱에서 가장 위에 위치한 카드를 내려놓는다.
-		if (rounds % 2 == 1) {
-			do_ground.push_front(do_deque.front());
-			do_deque.pop_front();
-		}
-		else {
-			su_ground.push_front(su_deque.front());
-			su_deque.pop_front();
-		}
+		grounds[(rounds + 1) % 2].push_front(deques[(rounds + 1) % 2].front());
+		deques[(rounds + 1) % 2].pop_front();
+		
 		//진행 도중 종료 조건: 자신의 덱에 있는 카드의 수가 0개가 되는 즉시
-		if (do_deque.empty() || su_deque.empty())
+		if (deques[0].empty() || deques[1].empty())
 			break;
 
 		//3+4 종을 먼저 치는 사람이 그라운드에 나와 있는 카드 더미를 모두 가져갈 수 있다
-		if ((!do_ground.empty() && do_ground.front() == 5) || (!su_ground.empty() && su_ground.front() == 5)) { //도도가 종 치는 조건
-			while (!su_ground.empty()) {	//상대의 그라운드 카드 합치기
-				do_deque.push_back(su_ground.back());
-				su_ground.pop_back();
-			}
-			while (!do_ground.empty()) {	//자신의 그라운드 카드 합치기
-				do_deque.push_back(do_ground.back());
-				do_ground.pop_back();
-			}
-		}
-		if (!su_ground.empty() && !do_ground.empty() && do_ground.front() + su_ground.front() == 5) { //수연이가 종 치는 조건
-			while (!do_ground.empty()) {	//상대의 그라운드 카드 합치기
-				su_deque.push_back(do_ground.back());
-				do_ground.pop_back();
-			}
-			while (!su_ground.empty()) {	//자신의 그라운드 카드 합치기
-				su_deque.push_back(su_ground.back());
-				su_ground.pop_back();
-			}
-		}
+		if ((!grounds[0].empty() && grounds[0].front() == 5) || (!grounds[1].empty() && grounds[1].front() == 5)) //도도가 종 치는 조건
+			ring(0, deques, grounds);
+		if (!grounds[1].empty() && !grounds[0].empty() && grounds[0].front() + grounds[1].front() == 5) //수연이가 종 치는 조건
+			ring(1, deques, grounds);
 		rounds++;
 	}
 }
@@ -51,19 +42,19 @@ int main() {
 	int n, m;
 	//입력
 	cin >> n >> m;
-	deque<int> do_deque, su_deque;
+	vector<deque<int>> deques(2);
 	int do_temp, su_temp;
 	while (n--) {
 		cin >> do_temp >> su_temp;
-		do_deque.push_front(do_temp);
-		su_deque.push_front(su_temp);
+		deques[0].push_front(do_temp);
+		deques[1].push_front(su_temp);
 	}
 
 	//연산
-	halligalli(do_deque, su_deque, m);
-	if (do_deque.size() > su_deque.size())
+	halligalli(deques, m);
+	if (deques[0].size() > deques[1].size())
 		cout << "do";
-	else if (do_deque.size() < su_deque.size())
+	else if (deques[0].size() < deques[1].size())
 		cout << "su";
 	else
 		cout << "dosu";
