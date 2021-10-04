@@ -22,8 +22,9 @@ void halligalli(vector<deque<int>> &deques, int m) {
 	vector<deque<int>> grounds(2);
 	while (rounds <= m) {	//m번 진행 후 종료
 		//2 도도를 시작으로 차례대로 그라운드에 자신이 가진 덱에서 가장 위에 위치한 카드를 내려놓는다.
-		grounds[(rounds + 1) % 2].push_front(deques[(rounds + 1) % 2].front());
-		deques[(rounds + 1) % 2].pop_front();
+		int turn = (rounds + 1) % 2;
+		grounds[turn].push_front(deques[turn].front());
+		deques[turn].pop_front();
 		
 		//진행 도중 종료 조건: 자신의 덱에 있는 카드의 수가 0개가 되는 즉시
 		if (deques[0].empty() || deques[1].empty())
