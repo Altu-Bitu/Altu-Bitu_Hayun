@@ -36,25 +36,17 @@ int cut(vector<int> cake) {
 	int cnt = 0;
 	for (int i = 0; i < cake.size(); i++) {
 		int check = cake[i] / 10;
+		int temp = check;
 		if (cake[i] % 10 == 0) {
-			if (check - 1 > m) {
-				cnt += m;
-				m = 0;
-			}
-			else {
-				cnt += check;
-				m -= (check - 1);
-			}
+			temp = check - 1;
+		}
+		if (temp > m) {
+			cnt += m;
+			m = 0;
 		}
 		else {
-			if (check > m) {
-				cnt += m;
-				m = 0;
-			}
-			else {
-				cnt += check;
-				m-= check;
-			}
+			cnt += check;
+			m -= temp;
 		}
 	}
 	return cnt;

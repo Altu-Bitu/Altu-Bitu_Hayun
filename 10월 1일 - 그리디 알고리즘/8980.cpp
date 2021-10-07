@@ -14,7 +14,6 @@ typedef struct{
 bool cmp(delivery a, delivery b) {	//받는 마을의 번호 오름차순으로
 	if (a.receiver != b.receiver)
 		return a.receiver < b.receiver;
-	return a.sender > b.sender;
 }
 
 int main() {
