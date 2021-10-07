@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+//그리디 알고리즘
+
 typedef long long ll;
 
 ll minCost(vector<ll> len, vector<ll> cost) {
