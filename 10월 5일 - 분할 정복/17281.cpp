@@ -71,7 +71,7 @@ void permu() {	//타순 (브루트포스 순열 검색 -> 참고: http://www.cpl
 		//게임하고 max 업데이트
 		max_score = max(max_score, game());
 
-	} while (next_permutation(test.begin(), test.end()));	//2번부터 9번까지 순열 생성
+	} while (next_permutation(test.begin() + 1, test.end()));	//2번부터 9번까지 순열 생성 -> *begin()+1으로 2번부터 순열 생성하도록
 
 	//return max_score;
 }

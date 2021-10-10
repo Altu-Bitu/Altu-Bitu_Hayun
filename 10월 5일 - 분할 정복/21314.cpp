@@ -5,59 +5,46 @@
 
 using namespace std;
 
-//틀렸습니다.
-//어디서 틀린지 모르겠다..???
-
-int toDec(string s) {	//민겸 수 -> 10진수
-	int dec = 1;
-	if (s[s.size() - 1] == 'K')
-		dec *= 5;
-	if (s.size() >= 2)
-		dec *= pow(10, s.size() - 1);
-	return dec;
-}
-
-void getMax(string s) {	//K로 끝나는 민겸 수를 십진수로 변환
-	string temp = "";
-	vector<int> max_mk;
+void getMax(string s) {	
+	string max_mk = "";		//바로 push back할 수 있도록 string으로
+	int last_k = -1;
 	for (int i = 0; i < s.size(); i++) {
-		if (s[i] == 'K') {
-			temp += s[i];
-			max_mk.push_back(toDec(temp));
-			temp = "";
-		}
-		else
-			temp += s[i];
-	}
-	for(int i = 0; i < temp.size(); i++)	//K로 끝나지 않는다면 전부 1로 출력
-		max_mk.push_back(1);
-	for (int i = 0; i < max_mk.size(); i++) {
-		cout << max_mk[i];
-	}
-	cout << endl;
-}
-
-void getMin(string s) {	//M끼리는 합치고 K는 5로 변환
-	string temp = "";
-	vector<int> min_mk;
-	for (int i = 0; i < s.size(); i++) {
-		if (s[i] == 'K') {
-			if (temp != "") {
-				min_mk.push_back(toDec(temp));
-				temp = "";
+		if (s[i] == 'K') {	//K가 나오면 5를 붙이고
+			max_mk.push_back('5');
+			for (int j = 0; j < i - last_k -1; j++) {	//M 개수만큼 0을 붙인다 (이전 K 위치로 M 개수 파악)
+				max_mk.push_back('0');
 			}
-			min_mk.push_back(5);
-		}
-		else {
-			temp += s[i];
+			last_k = i;	//K 인덱스 업데이트
 		}
 	}
-	if(temp != "")
-		min_mk.push_back(toDec(temp));
-	for (int i = 0; i < min_mk.size(); i++) {
-		cout << min_mk[i];
+	for(int i = last_k + 1; i < s.size(); i++)	//남은 M의 개수는 전부 1로 붙인다
+		max_mk.push_back('1');
+
+	cout << max_mk << endl;
+}
+
+void getMin(string s) {	
+	string min_mk = "";
+	int last_k = -1;
+	for (int i = 0; i < s.size(); i++) {
+		if (s[i] == 'K') {	//K가 나오면
+			for (int j = 0; j < i - last_k - 1; j++) {	//M의 개수만큼 10...0 붙인다
+				if (j == 0)
+					min_mk.push_back('1');
+				else
+					min_mk.push_back('0');
+			}
+			min_mk.push_back('5');	//5를 붙인다.
+			last_k = i;		//K 인덱스 업데이트
+		}
 	}
-	cout << endl;
+	for (int i = last_k + 1; i < s.size(); i++) {	//남은 M의 개수만큼 10...0 붙인다
+		if (i == last_k + 1)
+			min_mk.push_back('1');
+		else
+			min_mk.push_back('0');
+	}
+	cout << min_mk << endl;
 }
 
 

@@ -18,7 +18,7 @@ bool foldable(string paper) {
 			return false;
 	}
 	//Combine
-	return foldable(l) && foldable(r);
+	return foldable(l);	//*왼쪽이 만족하면 어차피 좌우 반대이기 때문에 오른쪽도 만족 -> 오른쪽은 확인할 필요가 없다
 }
 
 int main() {

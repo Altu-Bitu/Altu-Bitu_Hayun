@@ -4,26 +4,25 @@ using namespace std;
 
 //구현, 시뮬레이션
 
-vector<int> light;
+int n;
+bool light[101];
 
 void male(int num) {	//스위치 번호가 자기가 받은 수의 배수라면 상태를 바꾼다.
-	for (int i = num; i <= light.size() - 1; i+=num) {
-		light[i] = 1 - light[i];
+	for (int i = num; i <= n; i+=num) {
+		light[i] = !light[i];
 	}
-	
 }
 
 void female(int num) {	//좌우가 대칭이면서 가장 많은 스위치를 포함하는 구간의 스위치의 상태를 모두 바꾼다. 
 	light[num] = 1 - light[num];
 	for (int i = 1; ; i++) {
-		if (num - i >= 1 && num + i <= light.size() -1 && light[num - i] == light[num + i]) {
-			light[num - i] = 1 - light[num - i];
-			light[num + i] = 1 - light[num + i];
+		if (num - i >= 1 && num + i <= n && light[num - i] == light[num + i]) {
+			light[num - i] = !light[num - i];
+			light[num + i] = !light[num + i];
 		}
 		else
 			break;
 	}
-
 }
 
 void onOff(vector<pair<int, int>> student) {
@@ -36,10 +35,9 @@ void onOff(vector<pair<int, int>> student) {
 }
 
 int main() {
-	int n, m;
+	int  m;
 	//입력
 	cin >> n;
-	light.assign(n + 1, 0);
 	for (int i = 1; i <= n; i++)
 		cin >> light[i];
 	cin >> m;

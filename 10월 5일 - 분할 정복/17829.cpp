@@ -1,20 +1,15 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 //분할 정복
-//의도대로 푼 건지 모르겠다? 시간이 오래 걸리는 것 같다.
+//메모리 줄이는 구현방식 -> 샘플코드
 
 int secondMax(int a, int b, int c, int d) {	//2번째로 큰 수 리턴
 	int arr[] = { a, b, c, d };
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = 1; j < 4 - i; j++) {
-			if (arr[j - 1] < arr[j]) {	// 내림차순
-				swap(arr[j - 1], arr[j]);
-			}
-		}
-	}
+	sort(arr, arr + 4, greater<>());
 	return arr[1];
 }
 
