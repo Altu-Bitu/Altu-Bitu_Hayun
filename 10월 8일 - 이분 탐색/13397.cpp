@@ -42,18 +42,19 @@ int lowerSearch(int left, int right, int target) {	//구간의 점수의 최댓�
 
 int main() {
 	int n, m;
-	int right = 0;
-	
+	int arr_max = 0;
+	int arr_min = 10001;
 	//입력
 	cin >> n >> m;
 	arr.assign(n, 0);
 	for (int i = 0; i < n; i++) {
 		cin >> arr[i];
-		right = max(right, arr[i]);
+		arr_max = max(arr_max, arr[i]);
+		arr_min = min(arr_min, arr[i]);
 	}
 	
 	//연산 & 출력
 	//left : 모두 같은 수가 나올 수 있으므로 0
-	//right : 최댓값을 초과하는 구간의 점수는 나올 없다
-	cout << lowerSearch(0, right, m);
+	//right : (최댓값-최솟값)을 초과하는 구간의 점수는 나올 없다
+	cout << lowerSearch(0, arr_max - arr_min, m);
 }

@@ -20,7 +20,9 @@ int main() {
 		string name;
 		int val;
 		cin >> name >> val;
-		level.insert(make_pair(val, name));
+		//map의 operator[]는 항목이 없으면 자동으로 초기값을 만든다 (int 0, double 0.0, string "")
+		if (level[val] == "")	//칭호가 여러 개인 경우 가장 먼저 입력된 칭호 하나만 출력한다.
+			level[val] = name;
 	}
 	
 	//연산 & 출력

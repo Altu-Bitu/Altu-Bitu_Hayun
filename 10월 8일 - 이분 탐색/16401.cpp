@@ -12,7 +12,7 @@ int snack[1000000];
 
 int count(int len) {	//주어진 길이일 때 최대 몇 명의 조카에게 과자를 줄 수 있는지 계산
 	int total = 0;
-	for (int i = 0; i < n; i++) {
+	for (int i = n - 1; snack[i] >= len; i--) {	//과자의 길이가 len 이상인 경우만 확인하기
 		total += (snack[i] / len);
 	}
 	return total;

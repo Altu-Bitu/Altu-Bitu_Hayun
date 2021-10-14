@@ -40,6 +40,7 @@ int lowerSearch(int left, int right, int target) {	//블루레이 크기 중 최
 
 int main() {
 	int n, m, sum = 0;
+	int left = 0;
 
 	//입력
 	cin >> n >> m;
@@ -47,8 +48,11 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		cin >> lecture[i];
 		sum += lecture[i];
+		left = max(left, lecture[i]);
 	}
 
 	//연산 & 출력
-	cout << lowerSearch(1, sum, m);
+	//left: lecture의 최댓값도 블루레이에 저장되어야한다 (1로 하면 안된다, 반례: n = m인 경우, 답이 1이 됨)
+	//right: 블루레이 개수가 하나인 경우 모든 강의의 합을 초과할 수 없다
+	cout << lowerSearch(left, sum, m);
 }
