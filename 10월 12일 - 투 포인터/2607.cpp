@@ -27,9 +27,12 @@ int main() {
 		int check = 0;	//알파벳 개수 차이를 합하는 변수
 
 		for (int j = 0; j < 26; j++) {
-			if (abs(alphabet[0][j] - alphabet[i][j]) != 0) {
-				check += (alphabet[0][j] - alphabet[i][j]);
+			int diff = alphabet[0][j] - alphabet[i][j];
+			if (abs(diff) != 0) {
+				check += diff;
 				count++;
+				if (abs(diff) > 1)	//차이가 2 이상이면 걸러지도록
+					count++;
 			}
 		}
 		if ((check == 0 && (count == 2) || (count == 0)) || (abs(check) == 1 && count == 1))
