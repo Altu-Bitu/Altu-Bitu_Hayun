@@ -5,7 +5,6 @@
 using namespace std;
 
 //구현, 문자열
-//더 간단한 방법이 있을 것 같다..
 
 int main() {
 	int n;
@@ -30,12 +29,10 @@ int main() {
 			int diff = alphabet[0][j] - alphabet[i][j];
 			if (abs(diff) != 0) {
 				check += diff;
-				count++;
-				if (abs(diff) > 1)	//차이가 2 이상이면 걸러지도록
-					count++;
+				count += abs(diff);
 			}
 		}
-		if ((check == 0 && (count == 2) || (count == 0)) || (abs(check) == 1 && count == 1))
+		if(count <= 2 && abs(check) <2)
 			result++;
 	}
 
