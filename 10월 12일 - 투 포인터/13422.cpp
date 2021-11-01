@@ -66,7 +66,7 @@ int main() {
 			cin >> house[i];
 
 		//연산 & 출력
-		//cout << slidingWindow(house, n, m, k) << '\n';
-		cout << twoPointer(house, n, m, k) << '\n';
+		cout << slidingWindow(house, n, m, k) << '\n';
+		//cout << twoPointer(house, n, m, k) << '\n';
 	}
 }

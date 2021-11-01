@@ -59,8 +59,8 @@ int main() {
 		cin >> sushi[i];
 
 	//연산 & 출력
-	//cout << slidingWindow(sushi, n, d, k, c);
-	cout << twoPointer(sushi, n, d, k, c);
+	cout << slidingWindow(sushi, n, d, k, c);
+	//cout << twoPointer(sushi, n, d, k, c);
 
 	return 0;
 }
