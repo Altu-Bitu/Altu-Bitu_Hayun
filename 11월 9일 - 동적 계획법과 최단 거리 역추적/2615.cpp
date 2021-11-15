@@ -9,16 +9,17 @@ using namespace std;
 int dx[] = { 1, 1, 0, -1 };
 int dy[] = { 1, 0, 1, 1 };
 
-vector<vector<int>> board(19, vector<int>(19));		//바둑판
+vector<vector<int>> board(19, vector<int>(19));	//바둑판
 
 bool check_five(int x, int y, int color) {	//오목인지 확인하는 함수
-	for (int i = 0; i < 3; i++) {	//오른쪽 아래, 아래, 오른쪽 방향으로 탐색
+	for (int i = 0; i < 4; i++) {
 		int cnt = 0;
 		int nx = x + dx[i], ny = y + dy[i];
-		while (true) {
-			if (nx < 0 || nx >= 19 || ny < 0 || ny >= 19)
-				continue;
+		
+		if (nx < 0 || nx >= 19 || ny < 0 || ny >= 19)	//범위를 벗어난다면 패스
+			continue;
 
+		while (true) {
 			if (board[nx][ny] == color) {
 				cnt++;
 				nx += dx[i];
@@ -27,7 +28,7 @@ bool check_five(int x, int y, int color) {	//오목인지 확인하는 함수
 			else
 				break;
 		}
-		if (cnt == 4)
+		if (cnt == 4)	//오목 완성
 			return true;
 	}
 	return false;
@@ -41,7 +42,8 @@ int main() {
 			cin >> board[i][j];
 		}
 	}
-
+	
+	//바둑알이 있다면 오목 체크
 	for (int i = 0; i < 19; i++) {
 		for (int j = 0; j < 19; j++) {
 			if (board[i][j] > 0 && check_five(i, j, board[i][j])) {
